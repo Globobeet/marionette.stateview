@@ -24,6 +24,50 @@ $ npm install marionette.stateview
 
 All dependencies are listed in the `package.json` as `peerDependencies`, as this package wouldn't make any sense for any other environment.
 
+## Example
+
+```js
+import mn from 'backbone.marionette';
+
+const TestView = mn.StateView.extend({
+
+	// Any values provided to defaultState will be
+	// set on the state model when it is initialized.
+	// Can also be defined as a function that returns
+	// data object.
+	defaultState: {
+		foo: 'bar',
+		buz: ['baz', 'zed'],
+	},
+	
+	intialize(...args) {
+	
+		// StateView doesn't alter the original View constructor
+		// and as such performs all it's magic in the initialize
+		// function. If you need to do something in initialize,
+		// make sure you call the original first.
+		mn.StateView.prototype.initialize.apply(this, args);
+		
+		// You can interact with the state model just as you would
+		// any other entity
+		this.state.set('anything', 'anything-else');
+	},
+	
+	// State data is mixed into the template context as "_state"
+	template: _.template('Tell me <%= _state.anything %>'),
+	
+	// Bind methods to events on the state model just like you
+	// do with the view model & collection!
+	stateEvents: {
+		'change:anything': 'render',
+	},
+});
+```
+
+## Caveats
+
+Marionette.StateView performs some custom actions in the View `initialize()` and `serializeData()` methods, so if your view overwrites those functions, besure to invoke the default as well.
+
 ## Contributing
 
 Pull requests are always welcome! Please be sure to include any tests for new code & follow the current coding style as best you can.
