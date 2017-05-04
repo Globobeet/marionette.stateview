@@ -39,23 +39,22 @@ const TestView = mn.StateView.extend({
 		foo: 'bar',
 		buz: ['baz', 'zed'],
 	},
-	
+
 	intialize(...args) {
-	
-		// StateView doesn't alter the original View constructor
-		// and as such performs all it's magic in the initialize
-		// function. If you need to do something in initialize,
-		// make sure you call the original first.
+
+		// StateView events are bound when the view is initialized, so
+		// if your view is overwriting the initilize function, be sure
+		// to call the original first.
 		mn.StateView.prototype.initialize.apply(this, args);
-		
+
 		// You can interact with the state model just as you would
 		// any other entity
 		this.state.set('anything', 'anything-else');
 	},
-	
+
 	// State data is mixed into the template context as "_state"
 	template: _.template('Tell me <%= _state.anything %>'),
-	
+
 	// Bind methods to events on the state model just like you
 	// do with the view model & collection!
 	stateEvents: {

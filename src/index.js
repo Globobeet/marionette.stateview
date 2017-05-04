@@ -3,18 +3,19 @@ import bb from 'backbone';
 import mn from 'backbone.marionette';
 
 const StateView = mn.View.extend({
-    initialize() {
-        const initalState = _.result(this, 'defaultState');
-        const stateEvents = _.result(this, 'stateEvents');
+    _ensureElement() {
+        this._initializeStateview();
+        bb.View.prototype._ensureElement.call(this);
+    },
 
+    _initializeStateview() {
         // Create a model to hold the state
-        const state = new bb.Model(initalState);
+        this.state = new bb.Model(_.result(this, 'defaultState'));
+    },
 
+    initialize() {
         // Bind stateEvents result to the state model
-        mn.bindEvents(this, state, stateEvents);
-
-        // Make the state model accessible to the view
-        this.state = state;
+        mn.bindEvents(this, this.state, _.result(this, 'stateEvents'));
     },
 
     defaultState: {},
