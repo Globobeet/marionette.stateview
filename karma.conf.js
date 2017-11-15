@@ -1,49 +1,57 @@
-const webpackConfig = require('./webpack.config.test.js');
+const path = require('path');
+const webpackConfig = require('./webpack.config.test');
 
-module.exports = (config) => {
-    config.set({
-        singleRun: true,
-        colors: true,
-        logLevel: config.LOG_ERROR,
+const entry = './test/index.js';
+const coverageThreshold = 95;
 
-        files: [
-            './test/index.js',
+module.exports = config => config.set({
+    basePath: '',
+    singleRun: true,
+    frameworks: ['mocha'],
+    reporters: ['spec', 'threshold'],
+    port: 9876,
+    colors: true,
+    logLevel: config.LOG_WARN,
+    autoWatch: false,
+    browsers: ['PhantomJS'],
+    captureTimeout : 120000,
+    browserNoActivityTimeout : 120000,
+
+    files: [entry],
+    exclude: [],
+    preprocessors: {
+        [entry]: ['webpack', 'sourcemap'],
+    },
+
+    webpack: webpackConfig,
+
+    webpackMiddleware: {
+        noInfo: true,
+        stats: 'errors-only',
+    },
+
+    coverageReporter: {
+        dir : 'coverage/',
+        reporters: [
+            { type: 'lcov', subdir: '.' },
+            { type: 'text-summary' },
         ],
+    },
 
-        preprocessors: {
-            'test/index.js': 'webpack'
-        },
+    thresholdReporter: {
+        statements: coverageThreshold,
+        branches: coverageThreshold,
+        functions: coverageThreshold,
+        lines: coverageThreshold,
+    },
 
-        frameworks: ['mocha'],
-        browsers: ['PhantomJS'],
-        reporters: ['spec', 'coverage', 'threshold'],
-
-        webpack: webpackConfig,
-
-        webpackMiddleware: {
-            noInfo: true,
-        },
-
-        coverageReporter: {
-            type : 'lcov',
-            dir : './coverage/',
-            subdir: '.'
-        },
-
-        thresholdReporter: {
-            statements: 95,
-            branches: 95,
-            functions: 95,
-            lines: 95
-        },
-
-        plugins: [
-            'karma-spec-reporter',
-            'karma-phantomjs-launcher',
-            'karma-mocha',
-            'karma-coverage',
-            'karma-threshold-reporter',
-            'karma-webpack'
-        ],
-    });
-};
+    plugins: [
+        'karma-sourcemap-loader',
+        'karma-phantomjs-launcher',
+        'karma-mocha',
+        'karma-spec-reporter',
+        'karma-coverage',
+        'karma-threshold-reporter',
+        'karma-webpack',
+    ],
+});

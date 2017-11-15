@@ -1,29 +1,21 @@
-"use strict";
-
-const webpack = require('webpack');
-
 module.exports = {
     module: {
-        preLoaders: [
+        rules: [
             {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                loader: 'eslint',
+                loader: 'babel-loader',
+                options: {
+                    presets: [
+                        ['env', { 'modules': false }],
+                        'stage-2'
+                    ],
+                    plugins: ['transform-runtime'],
+                    cacheDirectory: true
+                },
+            },
+            {
+                loader: 'eslint-loader',
             },
         ],
-
-        loaders: [
-            {
-                test: /\.js?$/,
-                exclude: /node_modules/,
-                loader: 'babel',
-            },
-        ],
-    },
-
-    babel: {
-        presets: ['es2015', 'stage-2'],
-        plugins: ['add-module-exports', 'transform-runtime'],
     },
 
     devtool: '#source-map',

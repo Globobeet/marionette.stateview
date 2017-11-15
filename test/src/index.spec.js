@@ -70,4 +70,50 @@ describe('StateView', () => {
         view.state.set('foo', 'foobar');
         expect(spy).to.have.been.calledOnce;
     });
+
+    it.skip('should accept state passed in as a plain object', () => {
+        const TestView = StateView.extend({
+            defaultState: {
+                foo: 'initial-foo',
+                bar: 'initial-bar',
+            },
+        });
+
+        const view = new TestView({
+            state: {
+                foo: 'foo-value',
+                zed: 'zed-value',
+            },
+        });
+
+        expect(view.state.toJSON()).to.deep.equal({
+            foo: 'foo-value',
+            bar: 'initial-bar',
+            zed: 'zed-value',
+        });
+    });
+
+    it.skip('should use the passed-in state model', () => {
+        const TestView = StateView.extend({
+            defaultState: {
+                foo: 'initial-foo',
+                bar: 'initial-bar',
+            },
+        });
+
+        const stateModel = new bb.Model({
+            foo: 'foo-value',
+            zed: 'zed-value',
+        });
+
+        const view = new TestView({ state: stateModel });
+
+        expect(view.state.toJSON()).to.deep.equal({
+            foo: 'foo-value',
+            bar: 'initial-bar',
+            zed: 'zed-value',
+        });
+
+        expect(view.state).to.deep.equal(stateModel);
+    });
 });

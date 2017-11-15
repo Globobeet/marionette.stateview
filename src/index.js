@@ -1,4 +1,4 @@
-import _ from 'underscore';
+import { result } from 'underscore';
 import bb from 'backbone';
 import mn from 'backbone.marionette';
 
@@ -10,12 +10,12 @@ const StateView = mn.View.extend({
 
     _initializeStateview() {
         // Create a model to hold the state
-        this.state = new bb.Model(_.result(this, 'defaultState'));
+        this.state = new bb.Model(result(this, 'defaultState'));
     },
 
     initialize() {
         // Bind stateEvents result to the state model
-        mn.bindEvents(this, this.state, _.result(this, 'stateEvents'));
+        mn.bindEvents(this, this.state, result(this, 'stateEvents'));
     },
 
     defaultState: {},

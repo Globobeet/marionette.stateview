@@ -65,7 +65,7 @@ const TestView = mn.StateView.extend({
 
 ## Caveats
 
-Marionette.StateView performs some custom actions in the View `initialize()` and `serializeData()` methods, so if your view overwrites those functions, besure to invoke the default as well.
+Marionette.StateView performs some custom actions in the View `initialize()` and `serializeData()` methods, so if your view overwrites those functions, be sure to invoke the default as well.
 
 ## Contributing
 

@@ -1,6 +1,5 @@
 {
   "extends": "airbnb",
-  "cache": true,
   "parser": "babel-eslint",
   "globals": {
     "window": true,
@@ -24,12 +23,38 @@
       "ignoreStrings": true,
       "ignoreTemplateLiterals": true
     }],
+    "comma-dangle": ["error", {
+      "arrays": "always-multiline",
+      "objects": "always-multiline",
+      "imports": "always-multiline",
+      "exports": "always-multiline",
+      "functions": "ignore",
+    }],
     "no-underscore-dangle": 0,
     "global-require": 0,
     "class-methods-use-this": 0,
+    "consistent-return": 0,
+    "no-return-assign": ["error", "except-parens"],
     "no-console": ["error", { "allow": ["warn", "error"] }],
     "import/no-extraneous-dependencies": 0,
     "import/no-unresolved": 0,
-    "prefer-object-spread/prefer-object-spread": 2
+    "prefer-object-spread/prefer-object-spread": 2,
+    "react/jsx-indent": ["error", 4],
+    "react/jsx-indent-props": ["error", 4],
+    "react/forbid-prop-types": 0,
+    "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["req", "res", "routeData"] }],
+    "function-paren-newline": 0,
+    "prefer-promise-reject-errors": 0,
+    "jsx-a11y/label-has-for": 0,
+    "object-curly-newline": ["error", {
+      "ObjectExpression": { "multiline": true, "consistent": true },
+      "ObjectPattern": { "multiline": true, "consistent": true }
+    }],
+    "prefer-destructuring": ["error", {
+      "VariableDeclarator": { "array": true, "object": true },
+      "AssignmentExpression": { "array": false, "object": false }
+    }, {
+      "enforceForRenamedProperties": false
+    }]
   }
 }
