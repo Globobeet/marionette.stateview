@@ -1,6 +1,6 @@
 {
   "name": "marionette.stateview",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Marionette.StateView is a simple extension of the default Marionette.View adding an additional bound model for maintaining view state.",
   "main": "lib/index.js",
   "directories": {
