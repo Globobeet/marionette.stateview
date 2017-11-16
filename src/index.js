@@ -15,7 +15,7 @@ const StateView = View.extend({
         this.state = stateModel.set(initialState);
 
         // Call original constructor
-        View.prototype.constructor(options, ...args);
+        View.prototype.constructor.call(this, options, ...args);
 
         // Bind stateEvents result to the state model
         bindEvents(this, this.state, result(this, 'stateEvents'));
@@ -27,7 +27,7 @@ const StateView = View.extend({
     // Mix-in the state data
     serializeData(...args) {
         return {
-            ...View.prototype.serializeData(...args),
+            ...View.prototype.serializeData.call(this, ...args),
             _state: { ...this.state.attributes },
         };
     },
