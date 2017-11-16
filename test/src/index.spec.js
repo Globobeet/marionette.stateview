@@ -71,7 +71,7 @@ describe('StateView', () => {
         expect(spy).to.have.been.calledOnce;
     });
 
-    it.skip('should accept state passed in as a plain object', () => {
+    it('should accept state passed in as a plain object', () => {
         const TestView = StateView.extend({
             defaultState: {
                 foo: 'initial-foo',
@@ -93,7 +93,7 @@ describe('StateView', () => {
         });
     });
 
-    it.skip('should use the passed-in state model', () => {
+    it('should use the passed-in state model', () => {
         const TestView = StateView.extend({
             defaultState: {
                 foo: 'initial-foo',

@@ -1,21 +1,24 @@
 import { result } from 'underscore';
-import bb from 'backbone';
-import mn from 'backbone.marionette';
+import { Model } from 'backbone';
+import mn, { View, bindEvents } from 'backbone.marionette';
 
-const StateView = mn.View.extend({
-    _ensureElement() {
-        this._initializeStateview();
-        bb.View.prototype._ensureElement.call(this);
-    },
+const StateView = View.extend({
+    constructor({ state = {}, ...options } = {}, ...args) {
+        const isModel = state instanceof Model;
+        const stateModel = isModel ? state : new Model();
+        const initialState = {
+            ...result(this, 'defaultState'),
+            ...(isModel ? state.attributes : state),
+        };
 
-    _initializeStateview() {
-        // Create a model to hold the state
-        this.state = new bb.Model(result(this, 'defaultState'));
-    },
+        // Attach model for managing state
+        this.state = stateModel.set(initialState);
 
-    initialize() {
+        // Call original constructor
+        View.prototype.constructor(options, ...args);
+
         // Bind stateEvents result to the state model
-        mn.bindEvents(this, this.state, result(this, 'stateEvents'));
+        bindEvents(this, this.state, result(this, 'stateEvents'));
     },
 
     defaultState: {},
@@ -24,7 +27,7 @@ const StateView = mn.View.extend({
     // Mix-in the state data
     serializeData(...args) {
         return {
-            ...mn.View.prototype.serializeData.apply(this, args),
+            ...View.prototype.serializeData(...args),
             _state: { ...this.state.attributes },
         };
     },
