@@ -18,14 +18,14 @@ module.exports = {
                         loader: 'babel-loader',
                         options: {
                             presets: [
-                                ['env', { 'modules': false }],
-                                'stage-2'
+                                ['env', { modules: false }],
+                                'stage-2',
                             ],
                             plugins: [
                                 ['istanbul', { exclude: ['test/**/*.js'] }],
-                                'transform-runtime'
+                                'transform-runtime',
                             ],
-                            cacheDirectory: true
+                            cacheDirectory: true,
                         },
                     },
                     {
@@ -37,9 +37,9 @@ module.exports = {
                                 'no-unused-expressions': 0,
                                 'arrow-body-style': 0,
                             },
-                        }
+                        },
                     },
-                ]
+                ],
             },
         ],
     },
