@@ -18,7 +18,7 @@
     "build": "rm -rf ./dist/ && webpack ./src/index.js ./dist/marionette.stateview.js && npm run minify",
     "transpile": "rm -rf ./lib/ && babel src --out-dir lib --presets=env,stage-2 --plugins=add-module-exports,transform-runtime",
     "test": "rm -rf ./coverage/ && karma start",
-    "prepublish": "npm run transpile && npm run build"
+    "prepublishOnly": "npm run transpile && npm run build"
   },
   "author": "",
   "license": "MIT",
