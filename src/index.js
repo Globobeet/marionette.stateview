@@ -4,6 +4,9 @@ import mn, { View, bindEvents } from 'backbone.marionette';
 
 const StateView = View.extend({
     constructor({ state = {}, ...options } = {}, ...args) {
+        // Set options on instance so they're available in defaultState
+        this._setOptions(options);
+
         const isModel = state instanceof Model;
         const stateModel = isModel ? state : new Model();
         const initialState = {
